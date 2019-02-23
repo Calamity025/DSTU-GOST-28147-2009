@@ -103,6 +103,13 @@ namespace GOST {
 		}
 
 		private static void SumBy2In32(BitArray key, ref BitArray array) {
+			int[] temp = new int[2];
+			key.CopyTo(temp, 0);
+			array.CopyTo(temp, 1);
+			array = new BitArray(new int[]{temp[0]+temp[1]});
+			array = Reverse(array);
+		}
+		/*private static void SumBy2In32(BitArray key, ref BitArray array) {
 			BitArray temp = new BitArray(array.Length, false);
 			for (int i = array.Length - 1; i >= 0; i--) {
 				int result = Convert.ToInt32(array[i]) + Convert.ToInt32(key[i]) + Convert.ToInt32(temp[i]);
@@ -120,14 +127,20 @@ namespace GOST {
 				}
 			}
 			array = temp;
-		}
+		}*/
 
-		private static void ThreadEncrypt(object id) {
+		private static void ThreadEncrypt(int id, bool isEncryption) {
 			BitArray leftPart, rightPart;
 			leftPart = rightPart = new BitArray(32);
 			SliceInHalf(input.Dequeue(), ref leftPart, ref rightPart);
 			for (int i = 0; i < 32; i++) {
-				BitArray roundKey = i < 24 ? keys[i % 8] : keys[7 - i % 8];
+				BitArray roundKey;
+				if (isEncryption) {
+					roundKey = i < 24 ? keys[i % 8] : keys[7 - i % 8];
+				}
+				else {
+					roundKey = i < 8 ? keys[i] : keys[7 - (i % 8)];
+				}
 				SumBy2In32(roundKey, ref rightPart);
 				Shaffle(ref rightPart);
 				Shift(ref rightPart);
@@ -142,7 +155,7 @@ namespace GOST {
 					for (int j = 0; j < output.Length; j++) {
 						output[j] = j < 32 ? leftPart[j] : rightPart[j - 32];
 					}
-					encrypted.Add((int)id, output);
+					encrypted.Add(id, output);
 				}
 			}
 		}
@@ -167,14 +180,21 @@ namespace GOST {
 			InitKeys(key);
 			int queue = input.Count;
 			for (int i = 0; i < queue; i++) {
-				ThreadEncrypt(i);
+				ThreadEncrypt(i, true);
 			}
 			encryptedString = BitArrayListToString();
 			Refresh();
 		}
 
-		public static char Decrypt(string input, int key) { //тут все так же как в зашифровке
-			return ' ';
+		public static void Decrypt(string text, string key) { //тут все так же как в зашифровке
+			InitInput(text);
+			InitKeys(key);
+			int queue = input.Count;
+			for (int i = 0; i < queue; i++) {
+				ThreadEncrypt(i, false);
+			}
+			encryptedString = BitArrayListToString();
+			Refresh();
 		}
 	}
 }

@@ -61,6 +61,9 @@ namespace GOST {
         }
         
         void DecryptClick(object sender, EventArgs e) {
+            Calculus.Decrypt(Input.Text, Convert.ToString(Key.Text));
+            Output.Text = Calculus.encryptedString;
+            Calculus.encryptedString = "";
         }
     }
 }
