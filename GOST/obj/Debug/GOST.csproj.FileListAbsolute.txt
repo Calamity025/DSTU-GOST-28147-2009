@@ -1,0 +1,6 @@
+C:\Users\Calamity\RiderProjects\GOST\GOST\bin\Debug\GOST.exe
+C:\Users\Calamity\RiderProjects\GOST\GOST\bin\Debug\GOST.pdb
+C:\Users\Calamity\RiderProjects\GOST\GOST\obj\Debug\GOST.csprojAssemblyReference.cache
+C:\Users\Calamity\RiderProjects\GOST\GOST\obj\Debug\GOST.csproj.CoreCompileInputs.cache
+C:\Users\Calamity\RiderProjects\GOST\GOST\obj\Debug\GOST.exe
+C:\Users\Calamity\RiderProjects\GOST\GOST\obj\Debug\GOST.pdb
