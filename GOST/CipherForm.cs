@@ -35,7 +35,7 @@ namespace GOST {
       
             Key = new TextBox();
             Key.Location = new Point(85, 140);
-            Key.Text = "adadadadadadadadadadadadadadadad";
+            //Key.Text = "we are testing just a simple cry";
             Key.Width = 50;
             Controls.Add(Key);
       
@@ -55,15 +55,13 @@ namespace GOST {
         }
         //ивенты нажатий на кнопки
         void EncryptClick(object sender, EventArgs e) {
-            Calculus.Encrypt(Input.Text, Convert.ToString(Key.Text));
-            Output.Text = Calculus.encryptedString;
-            Calculus.encryptedString = "";
+            Calculus calculus = new Calculus(Input.Text, Key.Text);
+            Output.Text = calculus.Encrypt();
         }
         
         void DecryptClick(object sender, EventArgs e) {
-            Calculus.Decrypt(Input.Text, Convert.ToString(Key.Text));
-            Output.Text = Calculus.encryptedString;
-            Calculus.encryptedString = "";
+            Calculus calculus = new Calculus(Input.Text, Key.Text);
+            Output.Text = calculus.Decrypt();
         }
     }
 }
