@@ -46,7 +46,7 @@ namespace GOST {
 		}
 		
 		//функция оборота битового массива, потому что по дефолту младшие биты в нашем понимании тут - старшие и vise versa
-		private static BitArray Reverse(BitArray array)
+		public static BitArray Reverse(BitArray array)
 		{
 			int length = array.Length;
 			int mid = (length / 2);
@@ -176,14 +176,17 @@ namespace GOST {
 			encrypted = new Dictionary<int, BitArray>();
 		}
 		public static void Encrypt(string text, string key) {
-			InitInput(text);
+			/*InitInput(text);
 			InitKeys(key);
 			int queue = input.Count;
 			for (int i = 0; i < queue; i++) {
 				ThreadEncrypt(i, true);
 			}
 			encryptedString = BitArrayListToString();
-			Refresh();
+			Refresh();*/
+			Input input = new Input(text);
+			
+			encryptedString = 
 		}
 
 		public static void Decrypt(string text, string key) { //тут все так же как в зашифровке
